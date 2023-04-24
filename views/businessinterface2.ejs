@@ -18,12 +18,13 @@
                 <div class="box2">
                     <ul>
                         <li><a href="/businessinterface1" style="text-transform: uppercase;"><% if(user){ %>
-                            Wecolme <%=user %> 
+                            Welcome <%=user %> 
                         <% } %>
                         <li><a href="/businessinterface2">CATEGORY</a></li>
                         <!-- <li><a href="">SERVICES</a></li> -->
                         <li><a href="/businessallproducts">PRODUCTS</a></li>
                         <li><a href="/businesslocation">LOCATIONS</a></li>
+                        <li ><a href="/businesslogout">LOG OUT</a></li>
                         
                     </ul>
                 </div>
@@ -39,34 +40,41 @@
                     ="1">Photography</div>
                     <div class="catagory" data-id
                     ="2">Food</div>
-                    <div class="catagory" data-id
-                    ="3">Gifts</div>
+                    
                 </div>
                 <div class="subcatagories">
                     <div class="eventsubcatagories" data-id="0">
-                        
-                            <% for( let i=0;i<20;i++){ %>
-                                <span><input value="eve e<%=i  %>" type="checkbox" name="eve e<%=i  %>" id="eve<%=i  %>" class="span">
-                                    <label for="eve<%=i  %>" >eve<%=i  %></label></span>
-                            <% } %>
+
+                            <% events.forEach(subevent=>{%>
+
+                                <span><input value="event <%=subevent  %>" type="checkbox" name="event <%=subevent  %>" id="<%=subevent  %>" class="span">
+                                    <label for="<%=subevent  %>" ><%=subevent  %></label></span>
+
+                            <% }) %>
                         
                         
                     </div>
                     <div style="display: none;" class="photographysubcatagories" data-id="1">
-                        <% for( let i=0;i<24;i++){ %>
-                            <span><input name="photo p<%=i  %>" type="checkbox" name="photo p<%=i  %>" id="photo<%=i  %>"> <label for="photo<%=i  %>">photo<%=i  %></label></span>
-                        <% } %>
+                        
+                        <% photography.forEach(photosub=>{%>
+
+                            <span><input value="photo <%=photosub  %>" type="checkbox" name="photo <%=photosub  %>" id="<%=photosub  %>" class="span">
+                                <label for="<%=photosub  %>" ><%=photosub  %></label></span>
+
+                        <% }) %>
+                        
                     </div>
                     <div style="display: none;" class="foodsubcatagories" data-id="2">
-                        <% for( let i=0;i<25;i++){ %>
-                            <span><input value="food f<%=i  %>" type="checkbox" name="food f<%=i  %>" id="food<%=i  %>"> <label for="food<%=i  %>">food<%=i  %></label></span>
-                        <% } %>
+                        
+                        <% food.forEach(foodtype=>{%>
+
+                            <span><input value="food <%=foodtype  %>" type="checkbox" name="food <%=foodtype  %>" id="<%=foodtype  %>" class="span">
+                                <label for="<%=foodtype  %>" ><%=foodtype  %></label></span>
+
+                        <% }) %>
+
                     </div>
-                    <div style="display: none;" class="giftsubcatagories" data-id="3">
-                        <% for( let i=0;i<26;i++){ %>
-                            <span><input value="gift g<%=i  %>" type="checkbox" name="gift g<%=i  %>" id="gift<%=i  %>"> <label for="gift<%=i  %>">gift<%=i  %></label></span>
-                        <% } %>
-                    </div>
+                    
                 </div>
                 <button style="margin: 10px;padding:5px 8px;width: 80px;" disabled>submit</button>
             </div>
