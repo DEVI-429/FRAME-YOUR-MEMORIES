@@ -405,7 +405,7 @@ img{
               </div>
       
               <div class = "event-content">
-                <h2 class = "event-title">Destination Wedding</h2>
+                <h2 class = "event-title"><%=pname %></h2>
                 <a href = "#" class = "event-link">FYM</a>
       
                 <div class = "event-rating">
@@ -425,8 +425,8 @@ img{
                 </div>
       
                 <div class = "event-detail">
-                  <h2>About Event </h2>
-                  <p><%= descrip %></p><ul>
+                  <h2>About <%=category  %> </h2>
+                  <p><b>Description : </b><%= descrip %></p><ul>
                     <li>Availability: <span><%= Availability %></span></li>
                     <li>Category: <span><%= category %></span></li>
                     <li>Sub Category: <span><%= subcategory %></span></li>
@@ -525,7 +525,7 @@ img{
     <div class="footer">
         <div class="row">
             <div class="col">
-                <img src="footerlogo.png"class="logo">
+                <img src="/images/footerlogo.png"class="logo">
                 <p>-Give Your Guest A Reason To Stay</p>
             </div>
             <div class="col">
@@ -569,6 +569,28 @@ img{
         <hr>
         <p>&copy</p>
     </div>
-    <script src="customerproductdescription.js"></script>
+    <script >
+                const imgs = document.querySelectorAll('.img-select a');
+        const imgBtns = [...imgs];
+        let imgId = 1;
+
+        imgBtns.forEach((imgItem) => {
+            imgItem.addEventListener('click', (event) => {
+                event.preventDefault();
+                imgId = imgItem.dataset.id;
+                slideImage();
+            }); 
+        });
+        
+        console.log('afssfafafaf');
+
+        function slideImage(){
+            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+            document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+        }
+
+        window.addEventListener('resize', slideImage);
+    </script>
 </body>
 </html>

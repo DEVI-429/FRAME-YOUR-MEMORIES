@@ -1,70 +1,55 @@
+
 const express=require('express');
-const {ObjectId}=require('mongodb');
+const customercontrollers=require('../controllers/customercontrollers');
+const {requireCustomerAuth}=require('../middleware/customermiddleware');
 const db = require('../db');
-const router=express.Router();
+const { ObjectId } = require('mongodb');
+
+const customerRoute=express.Router();
+
+// const customerController = require('../controllers/customerController');
 
 
-router.get('/customersignuplogin',(req,res)=>{
-    res.render('customersignuplogin',{wrongPassword:'',alreadyexsists:''});
-})
+customerRoute.get('/customersignuplogin',customercontrollers.customersignuplogin_get);
 
-router.post('/customersignupdetails',(req,res)=>{
-    const dbobj=db.getDb();
-    
+customerRoute.post('/customerlogindetails',customercontrollers.customerlogindetails_post);
 
-        dbobj.collection('customerlogindetails').findOne({email:req.body.myMail})
-        .then(result=>{
-            if(result){
-                res.render('customersignuplogin',{wrongPassword:'',alreadyexsists:'Accout Already Exsists'});
-            }else{
-                dbobj.collection('customerlogindetails').insertOne({email:req.body.myMail,username:req.body.myName,password:req.body.myPassword})
-                .then(result1=>{
-                    
-                    res.render('customersignuplogin',{wrongPassword:'',alreadyexsists:''});
-                })
-                .catch(erore1=>{
-                    res.send(`Some Error Occured While inserting customer Details of user : ${erore1}`);
-                })
-            }
-        })
-        .catch(error2=>{
-            res.send(`Some Error Occured While inserting Details of user : ${error2}`);
-        })
-        
-});
+customerRoute.post('/customersignupdetails',customercontrollers.customersignupdetails_post);
 
-router.post('/customerlogindetails',(req,res)=>{
-    
-    const dbobj=db.getDb();
-        dbobj.collection('customerlogindetails').findOne({email:req.body.myMail})
-        .then(result=>{
-            if(result){
-                if(result.password==req.body.myPassword){
-                    
-                    res.redirect('/customerinterface1');
-                }else{
-                    res.render('customersignuplogin',{wrongPassword:`Incorrect Credentials`,alreadyexsists:''});
-                }
-            }
-            else{
-                res.render('customersignuplogin',{wrongPassword:`Mail Doesn't Exsist`,alreadyexsists:''});
-            }
-        })
-    
-});
+customerRoute.get('/customerinterface1',requireCustomerAuth,customercontrollers.customerinterface1_get);
 
-router.get('/customerinterface1',(req,res)=>{
-    res.render('customerinterface1');
-})
+customerRoute.get('/customerinterface2',requireCustomerAuth,customercontrollers.customerinterface2_get);
 
-router.get('/customerproductdescription/:id',async (req,res)=>{
+customerRoute.get('/mypage2',requireCustomerAuth,customercontrollers.mypage2_get);
+
+customerRoute.post('/mypage2_edit',requireCustomerAuth,customercontrollers.mypage2_edit_post);
+
+customerRoute.get('/customerproductaddtocart/:id',requireCustomerAuth,customercontrollers.customerproductaddtocart_id_get);
+
+customerRoute.get('/customerentirecart',requireCustomerAuth,customercontrollers.customerentirecart_get);
+
+customerRoute.get('/customerproductaddtowishlist/:id',requireCustomerAuth,customercontrollers.customerproductaddtowishlist_id_get);
+
+customerRoute.get('/customerentirewishlist',requireCustomerAuth,customercontrollers.customerentirewishlist_get);
+
+customerRoute.get('/edit_profile',requireCustomerAuth,customercontrollers.edit_profile_get);
+
+customerRoute.get('/change_password',customercontrollers.change_password_get);
+
+
+
+
+
+customerRoute.get('/customerproductdescription/:id',async (req,res)=>{
     const product_id=req.params.id;
     const dbobj=db.getDb();
     if(ObjectId.isValid(product_id)){
        await dbobj.collection('Product').findOne({_id:new ObjectId(product_id)})
         .then(product=>{
             if(product){
-               let actualproducdata=product;
+            
+            let actualproducdata=product;
+            let pname=actualproducdata.pname;
             let discount=actualproducdata.pdiscount;
             let budget=actualproducdata.pbudget;
             let Availability;
@@ -81,7 +66,7 @@ router.get('/customerproductdescription/:id',async (req,res)=>{
             let count=21;
             let star=4;
     
-        res.render('customerproductdescription',{count,star,discount,budget,Availability,category,subcategory,location,descrip,reviews});
+        res.render('customerproductdescription',{count,star,discount,budget,Availability,category,subcategory,location,descrip,reviews,pname});
             }
             else{
                 console.log('ffwef');
@@ -106,12 +91,12 @@ router.get('/customerproductdescription/:id',async (req,res)=>{
 
 })
 
-router.get('/ContactUs',(req,res)=>{
+customerRoute.get('/ContactUs',(req,res)=>{
     res.render('ContactUs',{sucess:''});
 })
 
 //form submited by customer in contact us
-router.post('/customercomplaint',(req,res)=>{
+customerRoute.post('/customercomplaint',(req,res)=>{
     const dbobj= db.getDb();
 
     dbobj.collection('complaints').insertOne(req.body)
@@ -124,5 +109,29 @@ router.post('/customercomplaint',(req,res)=>{
     
 })
 
+customerRoute.get('/Final-payment',(req,res)=>{
+    res.render('Final-payment');
+});
 
-module.exports=router;
+customerRoute.get('/Final-payment1',(req,res)=>{
+    res.render('Final-payment1');
+});
+
+customerRoute.get('/Gifts',(req,res)=>{
+    res.render('Gifts');
+});
+
+customerRoute.get('/payment',(req,res)=>{
+    res.render('payment');
+});
+
+customerRoute.get('/payment1',(req,res)=>{
+    res.render('payment1');
+});
+
+customerRoute.get('/customerreview',(req,res)=>{
+    res.render('customerreview');
+});
+
+
+module.exports = customerRoute;

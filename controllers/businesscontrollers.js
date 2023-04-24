@@ -212,7 +212,7 @@ module.exports={
                     const token=createtoken(result1._id);
 
                     res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
-                    res.render('businesssignuplogin',{wrongPassword:'',alreadyexsists:''});
+                    res.redirect('/registration');
                 })
                 .catch(erore1=>{
                     res.send(`Some Error Occured While inserting Details of user : ${erore1}`);
@@ -221,6 +221,32 @@ module.exports={
         })
         .catch(error2=>{
             res.send(`Some Error Occured While inserting Details of user : ${error2}`);
+        })
+    },
+
+    addbusinessdetails_post:(req,res) => {
+
+        const Name = req.body.name
+        const Email = req.body.email_id
+        const Pan = req.body.pan_no
+        const Exp = req.body.exp_no
+        const Phone = req.body.phn_no
+        const Dob = req.body.date_birth
+        const Img_url = req.body.imgname
+        const Gend = req.body.gender
+        const Add1 = req.body.add_1
+        const Add2 = req.body.add_2
+        const City = req.body.city_name
+        const Reg = req.body.reg_name
+        const Pin = req.body.pin_no;
+        const dbobj=db.getDb();
+        dbobj.collection('EveryBDetails')
+        .insertOne({ name:Name,email:Email,pan : Pan, exp : Exp, phone: Phone, dob: Dob, imgname : Img_url, gender :Gend, add_1 : Add1, add_2 : Add2, city_name : City, reg_name : Reg, pin_no : Pin })
+        .then(result => {
+            res.status(201).send('Please Waiit until we verify you');
+        })
+        .catch(err => {
+            res.status(500).json({err: 'Could not create a new businessman'});
         })
     },
 

@@ -10,7 +10,7 @@ const finance=document.querySelector('#Finance');
 const finance1=document.querySelector('.finance1');
 
 partner.addEventListener('click', ()=>{
-    partner.style.background="bisque";
+    partner.style.background="white";
     partner.style.borderTopLeftRadius="15px" ;
     partner.style.borderBottomLeftRadius="15px";
     client.style.backgroundColor="#111";
@@ -25,7 +25,7 @@ partner.addEventListener('click', ()=>{
 }) 
 
 client.onclick = ()=>{
-    client.style.background="bisque";
+    client.style.background="white";
     client.style.borderTopLeftRadius="15px" ;
     client.style.borderBottomLeftRadius="15px";
     partner.style.backgroundColor="#111";
@@ -40,7 +40,7 @@ client.onclick = ()=>{
 }
 
 registrations.onclick = ()=>{
-    registrations.style.background="bisque";
+    registrations.style.background="white";
     registrations.style.borderTopLeftRadius="15px" ;
     registrations.style.borderBottomLeftRadius="15px";
     client.style.backgroundColor="#111";
@@ -55,7 +55,7 @@ registrations.onclick = ()=>{
 }
 
 complaints.onclick = ()=>{
-    complaints.style.background="bisque";
+    complaints.style.background="white";
     complaints.style.borderTopLeftRadius="15px" ;
     complaints.style.borderBottomLeftRadius="15px";
     client.style.backgroundColor="#111";
@@ -70,7 +70,7 @@ complaints.onclick = ()=>{
 }
 
 finance.onclick = ()=>{
-    finance.style.background="bisque";
+    finance.style.background="white";
     finance.style.borderTopLeftRadius="15px" ;
     finance.style.borderBottomLeftRadius="15px";
     client.style.backgroundColor="#111";

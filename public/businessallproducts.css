@@ -135,3 +135,7 @@ body{
   .mainhead{
     width: 100%;
   }
+
+  #back1:hover{
+    color: rgb(78, 196, 236);
+  }

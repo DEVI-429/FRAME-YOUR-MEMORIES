@@ -13,7 +13,7 @@
     <div class="maincontainer">
         
         <% if(products.length>0){ %>
-            <div class="back" title="return"><a href=""><i class="fa-solid fa-arrow-left"></i></a></i></div>
+            <div class="back" title="return"><a href="/businessinterface1"><i class="fa-solid fa-arrow-left"></i></a></i></div>
             <div class="mainhead" style="text-align: center;"><h2>Your Products</h2></div>
             <% for(let i of products){ %>
                 <div class="encapsulated" style="margin-top: 50px;">
@@ -33,6 +33,7 @@
             <% } %>
         <% }else{ %>
             <div class="noprod">
+                <div class="back"  title="return"><a href="/businessinterface1"><i id="back1" class="fa-solid fa-arrow-left"></i></a></i></div>
                 <h2>Feels So Light !</h2>
                 <h2>Time To Start Your Journey By Adding Products...</h2>
             </div>

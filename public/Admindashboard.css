@@ -1,6 +1,6 @@
 body {
     font-family: "Lato", sans-serif;
-    background: bisque;
+    background: white;
     position: relative;
     margin: 0;
     padding: 0;
@@ -39,7 +39,7 @@ body {
   
   .sidenav button:hover {
     color:palevioletred;
-    background: bisque;
+    background: white;
     border-top-left-radius:15px ;
     border-bottom-left-radius: 15px;
     left: 30px;
@@ -106,7 +106,7 @@ body {
 
  .partner1{
   position: absolute;
-  background: bisque;
+  background: white;
 
  }
 
@@ -115,7 +115,7 @@ body {
   display: none;
   color: black;
   margin-left: 18%;
-  background: bisque;
+  background: white;
 
  }
 
@@ -140,7 +140,7 @@ body {
   position: absolute;
   display: none;
   color: black;
-  background: bisque;
+  background: white;
   /* height: max-content; */
  }
 

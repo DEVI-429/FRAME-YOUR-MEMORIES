@@ -10,6 +10,7 @@ imgBtns.forEach((imgItem) => {
     }); 
 });
  
+console.log('afssfafafaf');
 
 function slideImage(){
     const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;

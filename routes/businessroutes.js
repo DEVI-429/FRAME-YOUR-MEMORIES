@@ -11,6 +11,10 @@ router.get('/businesssignuplogin',(req,res)=>{
 
 router.post('/businesssignupdetails',businesscontrollers.businesssignupdetails_post);
 
+router.get('/registration',(req,res)=>{
+    res.render('registration');
+});
+
 router.post('/businesslogindetails',businesscontrollers.businesslogindetails_post);
 
 
@@ -19,6 +23,8 @@ router.get('/businessinterface1',requireBusinessAuth,businesscontrollers.busines
 router.get('/businessinterface2',requireBusinessAuth,businesscontrollers.businessinterface2_get);
 
 router.post('/businessinterface3',requireBusinessAuth,businesscontrollers.businessinterface3_post);
+
+router.post('/addbusinessdetails',businesscontrollers.addbusinessdetails_post);
 
 router.post('/p_details_to_db',requireBusinessAuth,businesscontrollers.p_details_to_db_post);
 
