@@ -28,7 +28,6 @@
             justify-content: center;
             flex-flow: column;
             padding-bottom: 60px;
-            flex-wrap: wrap;
             width:100%;
             height:100vh;
             min-height: 100vh;
@@ -149,7 +148,26 @@
             <!-- <h3>Credit card Payment</h3> -->
         </div>
         <p>Please complete your final booking.</p><br>
-        <form action="" name="myform">
+        <div class="pdetails" style="margin-bottom: 8px;">
+            
+            <span>
+                Product Name : <%=product.pname  %> 
+            </span>
+            <span>
+                Total Cost : <%=(Math.ceil(product.pbudget - ((product.pbudget)*product.pdiscount)/100))  %>
+            </span>
+        </div>
+        <form action="/ThankYouPage" onsubmit="return validateform()" name="myform" method="post">
+                <input style="display: none;" type="text" name="pid" value="<%=product._id%>" >
+
+            <div class="inputBox">
+                <span>Phone Number</span>
+                <input type="text" value="" class="card-number-input" name="phonenumber" required>
+            </div>
+            <div class="inputBox">
+                <span>Address</span>
+                <input type="text" value=""  name="address" required>
+            </div>
             <div class="inputBox">
                 <span>Card Number</span>
                 <input type="text" maxlength="16" class="card-number-input" id ="card-number" name="one" required>
@@ -210,8 +228,8 @@
         const expirymonth = document.querySelector("#expiry-month");
         const expiryyear = document.querySelector("#expiry-year");
         const cvvValue = document.querySelector("#cvv");
-        submit.addEventListener("click",(event)=>{
-            event.preventDefault();
+        const validateform=(event)=>{
+            
 
             const cardNumberRegex = /^\d{16}$/;
             const cardHolderRegex = /^[a-zA-Z]+\s[a-zA-Z]+$/;
@@ -223,6 +241,7 @@
 
             if (!cardNumberRegex.test(cardnumber.value)) {
                  errorMessage += "Please enter a valid credit card number (16 digits)\n";
+                
             }
 
             if (!cardHolderRegex.test(cardholder.value)) {
@@ -241,18 +260,20 @@
             if (!cvvRegex.test(cvvValue.value)) {
                 errorMessage += "Please enter a valid CVV (3 digits)\n";
             }
+
             if (errorMessage !== "") {
                 alert(errorMessage);
+                return false;
             } else {
-                window.location.href="/Final-payment";
+                return true;
             }
-            return false;
-        });
+            
+        }
 
         const back= document.getElementById("prev")
         back.addEventListener("click",(event)=>{
             event.preventDefault();
-            window.location.href="/Bookings";
+            window.location.href="/customerentirecart";
 });
 
     </script>

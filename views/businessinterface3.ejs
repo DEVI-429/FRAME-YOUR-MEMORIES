@@ -32,8 +32,10 @@
                     <span data-catagory="<%=i %>"><%= i.split(' ')[1] %></span>
                 <% } %>
                 </div>
+                <div class="errormess" style="color: red;"></div>
                 <div style="display: none;" class="addservice">
                     <h3>PRODUCT DETAILS</h3>
+                    
                     <input style="display: none;" type="text" name="mycatagory" value="1">
                     <input type="text" style="display: none;" value="2" name="mysubcatagory">
                     
@@ -46,11 +48,13 @@
                     </div>
                     <input type="number" name="productbudget" placeholder="Product Cost" required>
                     <input type="number" name="productdiscount" placeholder="Discount in %" required>
+                    <input type="text" name="image1" id="" required placeholder="Image URL">
                     <button>SUbMiT</button>
                 </div>
                 <div style="display: none;font-weight: bolder;" class="success">
                     SUCCESSFULLY INSERTED!
                 </div>
+
             </div>
         </header>
         

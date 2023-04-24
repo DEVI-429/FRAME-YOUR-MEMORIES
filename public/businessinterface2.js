@@ -61,12 +61,12 @@ myform.addEventListener('submit', (event) => {
 });
 
 
-$(document).ready(function(){
-    $(".span").click(function(){
-      if($(this).is(":checked")){
-          $(this).parent().addClass("color-blue");
-      }else {
-          $(this).parent().removeClass("color-blue");
-      }
-    });
-  });
+// $(document).ready(function(){
+//     $(".span").click(function(){
+//       if($(this).is(":checked")){
+//           $(this).parent().addClass("color-blue");
+//       }else {
+//           $(this).parent().removeClass("color-blue");
+//       }
+//     });
+//   });

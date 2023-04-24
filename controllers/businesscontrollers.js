@@ -1,16 +1,27 @@
 const db = require("../db");
+
+//for restricting the user to access some webpages
 const jwt=require('jsonwebtoken');
+
+//objectid to verify the _id
 const {ObjectId}=require('mongodb');
 
+//To parse the cookie
 const cookieparser=require('cookie-parser');
 
-const maxAge=30*24*60*60;//3 days 
 
+//setting expiry for cookie
+const maxAge=3*24*60*60;//3 days 
+
+
+//creating a token 
+//storing it in cookie jwt
 const createtoken=(id)=>{
     
     return jwt.sign({id},'a secret message',{expiresIn:maxAge});
 }
 
+//fetching businessid from request
 const getbusinessId=async (req)=>{
     let deocded=undefined;
     const token=req.cookies.jwt;
@@ -26,20 +37,144 @@ const getbusinessId=async (req)=>{
     return deocded.id;
 }
 
+
+//exporting and accessing in business routes
 module.exports={
     businessinterface1_get: async (req,res)=>{
-        const bid= await getbusinessId(req);
+        // const bid= await getbusinessId(req);
         
         res.render('businessinterface1');
     },
     businessinterface2_get:(req,res)=>{
-        res.render('businessinterface2');
+        const eventSubcategories = [
+            'Weddings',
+            'Birthdays',
+            'Graduations',
+            'Anniversaries',
+            'Baby showers',
+            'Bridal showers',
+            'Retirement parties',
+            'Promotions',
+            'Religious celebrations',
+            'Fundraisers',
+            'Employee appreciation events',
+            'Company picnics',
+            'Customer appreciation events',
+            'Product launches',
+            'Store openings',
+            'Art shows',
+            'Film festivals',
+            'Music festivals',
+            'Comic conventions',
+            'Sports championships',
+            'Award ceremonies',
+            'Art auctions',
+            'Charity galas',
+            'Fashion shows',
+            'Concerts',
+            'Dance recitals',
+            'Theater productions',
+            'Circus performances',
+            'Magic shows',
+            'Stand-up comedy'
+          ];
+
+          const foodStyles = [
+            'Italian',
+            'Mexican',
+            'Chinese',
+            'Japanese',
+            'Thai',
+            'Indian',
+            'French',
+            'Greek',
+            'Turkish',
+            'Lebanese',
+            'Moroccan',
+            'Spanish',
+            'Portuguese',
+            'Brazilian',
+            'Peruvian',
+            'Argentinian',
+            'Colombian',
+            'Venezuelan',
+            'Caribbean',
+            'Soul food',
+            'Southern',
+            'Cajun',
+            'Creole',
+            'German',
+            'British',
+            'Irish',
+            'Scottish',
+            'Russian',
+            'Ukrainian',
+            'Polish',
+            'Swedish',
+            'Norwegian',
+            'Danish',
+            'Finnish',
+            'Vietnamese',
+            'Korean',
+            'Filipino',
+            'Indonesian',
+            'Malaysian',
+            'Singaporean',
+            'Cambodian',
+            'Nepalese',
+            'Sri Lankan',
+            'Afghan',
+            'Iranian',
+            'Israeli',
+            'Ethiopian',
+            'South African',
+            'Australian',
+            'New Zealand',
+            'American'
+          ];
+          
+          const photographyTypes = [
+            'Landscape',
+            'Portrait',
+            'Street',
+            'Fashion',
+            'Food',
+            'Wildlife',
+            'Sports',
+            'Event',
+            'Architectural',
+            'Documentary',
+            'Black and White',
+            'Fine Art',
+            'Macro',
+            'Night',
+            'Astrophotography',
+            'Underwater',
+            'Drone',
+            'Travel',
+            'Adventure',
+            'Pet',
+            'Family',
+            'Wedding',
+            'Boudoir',
+            'Newborn',
+            'Conceptual',
+            'Product',
+            'Real Estate',
+            'Stock',
+            'Time-Lapse',
+            '360-Degree'
+          ];
+          
+          
+        res.render('businessinterface2',{events:eventSubcategories,food:foodStyles,photography:photographyTypes});
     },
     businessinterface3_post:(req,res)=>{
         let selectedcat=[];
         for(const i in req.body){
             selectedcat.push(i);
         }
+        console.log(req.body);
         res.render('businessinterface3',{selectedcat});
     },
     p_details_to_db_post:async (req,res)=>{
@@ -123,7 +258,10 @@ module.exports={
             addlocation.push(i);
         }
 
+        
+
         const bid=await getbusinessId(req);
+        
         let nonCommonElements=[];
         await dbobj.collection('business').findOne({_id:new ObjectId(bid)},{location:1})
         .then(reslu=>{
@@ -208,11 +346,11 @@ module.exports={
                 res.render('businesssignuplogin',{wrongPassword:'',alreadyexsists:'Accout Already Exsists'});
             }else{
                 dbobj.collection('business').insertOne({email:req.body.myMail,username:req.body.myName,password:req.body.myPassword})
-                .then(result1=>{
-                    const token=createtoken(result1._id);
-
+                .then(async result1=>{
+                    const token=await createtoken(result1._id);
+                    console.log(result1._id);
                     res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
-                    res.redirect('/registration');
+                    res.render('registration',{mail:req.body.myMail});
                 })
                 .catch(erore1=>{
                     res.send(`Some Error Occured While inserting Details of user : ${erore1}`);
@@ -268,7 +406,51 @@ module.exports={
                 res.render('businesssignuplogin',{wrongPassword:`Mail Doesn't Exsist`,alreadyexsists:''});
             }
         })
+    },
+
+    addbusinessman_post:(req,res)=>{
+        
+        let newobj=req.body;
+        newobj.email=req.body.email_id;
+        delete newobj.email_id;
+        newobj.username=req.body.name;
+        // console.log(req.body);
+        // console.log(newobj,'hbjb ');
+        const dbobj=db.getDb();
+        dbobj.collection('business').updateOne({email:newobj.email},{$set:newobj})
+        .then((result)=>{
+            res.redirect('/verification');
+        })
+        .catch(err=>{
+            res.send(`Some Error : ${err}`);
+        })
+        // res.send(req.body);
+    },
+
+    businesslogout_get:(req,res)=>{
+        res.cookie('jwt','',{maxAge:1});
+        res.redirect('/frameyourmemories');
     }
-    
+    ,
+    businessorders_get:async (req,res)=>{
+        const userid=await getbusinessId(req);
+        let products=[];
+        const dbobj=db.getDb();
+
+        await dbobj.collection('business').findOne({_id:new ObjectId(userid)}).then((result)=>{
+            if(result){
+                if(result.orders){
+                    res.render('businessorders',{products:result.orders})
+                }
+                else{
+                    res.render('businessorders',{products:products})
+                }
+            }else{
+                res.render('businessorders',{products:products})
+            }
+        }).catch((err)=>{
+            res.send('Some Error Occured while fetching the Oreders')
+        })
+    }
 
 };

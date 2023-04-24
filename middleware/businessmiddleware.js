@@ -1,6 +1,14 @@
+//jwt to create a session
 const jwt=require('jsonwebtoken');
+
+//importing the db to get databse object
 const db = require('../db');
+
+//objectId() to convert string into ObectId
 const {ObjectId}=require('mongodb');
+
+//Protecting the business pages
+//Verifies if user is allowed to access restricted pages or not
 
 const requireBusinessAuth=async (req,res,next)=>{
     const token=req.cookies.jwt;
@@ -11,16 +19,18 @@ const requireBusinessAuth=async (req,res,next)=>{
                 console.log(error.message);
                 res.redirect('/businesssignuplogin');
             }else{
-                const dbobj=db.getDb();
+                const dbobj=db.getDb();// console.log(decodedtoken.id);
                 await dbobj.collection('business').findOne({_id:new ObjectId(decodedtoken.id)})
                 .then(result=>{
                     if(result){
-                        // console.log('as',result);
-                        if(result.isverified==true){
+                         if(result.isverified==true){
                             next();
                         }else{
-                            res.redirect('/businesssignuplogin');
+                            res.redirect('/verification');
                         }
+                    }else{
+                        console.log('NOt found');
+                        res.redirect('/businesssignuplogin');
                     }
                 })
                 .catch(()=>{
@@ -35,6 +45,8 @@ const requireBusinessAuth=async (req,res,next)=>{
         res.redirect('/businesssignuplogin');
     }
 }
+
+//checks the user and pass the username to the next middleware
 
 const checkUser=(req,res,next)=>{
     const token=req.cookies.jwt;
@@ -68,5 +80,7 @@ const checkUser=(req,res,next)=>{
         next();
     }
 }
+
+//exporting
 
 module.exports={requireBusinessAuth,checkUser};

@@ -10,16 +10,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="maincontainer">
+    <div class="maincontainer"> 
         
         <% if(products.length>0){ %>
             <div class="back" title="return"><a href="/businessinterface1"><i class="fa-solid fa-arrow-left"></i></a></i></div>
-            <div class="mainhead" style="text-align: center;"><h2>Your Products</h2></div>
+            <div class="mainhead" style="text-align: center;"><h2>Your Products</h2><input style="position: absolute;
+                right: 5%;
+                border-radius: 25px;background: #ffffff3b;
+                font-size: 1.01rem;
+                padding: 5px;" placeholder="Search Here" oninput="searchmyproduct()" id="mysearchproduct"  type="text"></div>
             <% for(let i of products){ %>
-                <div class="encapsulated" style="margin-top: 50px;">
+                <div data-pname="<%=i.pname %>" class="encapsulated" style="margin-top: 50px;">
                     <a href="/businessallproducts/<%=String(i._id) %>">
                         <div class="container" style="border-top-right-radius: 10px;border-top-left-radius: 10px;">
-                            <img src="./images/cardphoto4.jpg" alt="Avatar" class="image">
+                            <% if(i.image1){ %>
+                                <img src="<%=i.image1%>" alt="Not Found" class="image">
+                              <% }else{ %>
+                                
+                                <img src="./images/cardphoto4.jpg" alt="Not Found" class="image">
+                              <% } %>
                             <div class="overlay">
                             <div class="text"><%=i.pname  %></div>
                             </div>
@@ -39,5 +48,25 @@
             </div>
         <% } %>
     </div>
+    <script>
+        const allproducts=document.querySelectorAll('.encapsulated');
+        const searchmyproduct=()=>{
+            
+            let searchedproduct=document.querySelector('#mysearchproduct').value;
+
+            console.log(searchedproduct);
+
+            let regexp=new RegExp(searchedproduct.trim(),'i');
+
+            allproducts.forEach(oneproduct=>{
+                if(regexp.test(oneproduct.getAttribute('data-pname'))){
+                    oneproduct.style.display='block';
+                }else{
+                    oneproduct.style.display='none';
+                }
+            })
+
+        }
+    </script>
 </body>
 </html>

@@ -1,7 +1,13 @@
+//jwt to create a session
 const jwt=require('jsonwebtoken');
+
+//importing the db to get databse object
 const db = require('../db');
+
+//objectId() to convert string into ObectId
 const {ObjectId}=require('mongodb');
 
+//Protecting the Customer from unauthorized users
 const requireCustomerAuth=async (req,res,next)=>{
     const token=req.cookies.jwt1;
     

@@ -17,8 +17,8 @@ body{
 
 /* for Sinky class backgrohnd linear gardient */
 .sinky{
-  color:#03fff6!important;background-color:#E1B0AC!important;
-  background-image: linear-gradient(45deg,black,#757575);
+  color:darkblue!important;background-color:#E1B0AC!important;
+  background-image: linear-gradient(45deg,  rgb(255, 122, 144),  white);
 }
 
 .whity{
@@ -1325,20 +1325,20 @@ a{
   background-color:#E1B0AC!important;
 }
 .black,.hover-black:hover{
-  color:rgb(208, 18, 250)!important;
-  background-color:black!important;
+  color:darkblue!important;
+  background-color:white!important;
 }
 .grey,.hover-grey:hover,.gray,.hover-gray:hover{
-  color:rgb(208, 18, 250)!important;
-  background-color:black!important;
+  color:darkblue!important;
+  background-color:white!important;
 }
 .light-grey,.hover-light-grey:hover,.light-gray,.hover-light-gray:hover{
-  color:#03fff6!important;
-  background-color:grey!important;
+  color:darkblue!important;
+  background-color:white!important;
 }
 .dark-grey,.hover-dark-grey:hover,.dark-gray,.hover-dark-gray:hover{
-  color:#fff!important;
-  background-color:#616161!important;
+  color:darkblue!important;
+  background-color:white!important;
 }
 .pale-red,.hover-pale-red:hover{
   color:#000!important;
@@ -1414,7 +1414,7 @@ a{
   color:#fdf5e6!important;
 }
 .text-teal,.hover-text-teal:hover{
-  color:#03fff6!important;
+  color:darkblue!important;
 }
 .text-yellow,.hover-text-yellow:hover{
   color:#d2be0e!important;
@@ -1426,7 +1426,7 @@ a{
   color:#000!important;
 }
 .text-grey,.hover-text-grey:hover,.text-gray,.hover-text-gray:hover{
-  color:#03fff6!important;
+  color:darkblue!important;
 }
 .text-light-grey,.hover-text-light-grey:hover,.text-light-gray,.hover-text-light-gray:hover{
   color:#f1f1f1!important;
@@ -1613,4 +1613,3 @@ a{
     margin-top: 20px;
     overflow: hidden;
   }
-  

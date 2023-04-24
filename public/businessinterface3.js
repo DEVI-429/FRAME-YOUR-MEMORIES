@@ -72,8 +72,39 @@ addsubbtn.addEventListener('click',async ()=>{
             pavailability:formdvalues[3],
             pbudget:Number(formdvalues[4]),
             pdiscount:Number(formdvalues[5]),
-            pdescription:pdesc
+            pdescription:pdesc,
+            image1:formdvalues[6]
         };
+
+        const errormessagediv=document.querySelector('.errormess');
+
+        let pnameregexp=new RegExp('^[a-zA-Z][a-zA-Z\s_]');
+        let pdescregexp=new RegExp('');
+        
+        if(!pnameregexp.test(formdvalues[2])){
+            errormessagediv.innerHTML='Invalid Product Name';
+            return false;
+        }
+
+        if(!(Number(formdvalues[4])>0)){
+            errormessagediv.innerHTML=`Invalid Cost`;
+            return false;
+        }
+
+        if(!(Number(formdvalues[5]) >0 && Number(formdvalues[5])<=100 && formdvalues[5])){
+            errormessagediv.innerHTML=`Invalid Discount`;
+            return false;
+        }
+
+        if(!pdesc.trim()){
+            errormessagediv.innerHTML=`Invalid Description`;
+            return false;
+        }
+
+        if(!formdvalues[6].trim()){
+            errormessagediv.innerHTML=`Invaild URL field`;
+            return false;
+        }
 
 
         try{
@@ -94,4 +125,5 @@ addsubbtn.addEventListener('click',async ()=>{
 
     addservice.style.display='none';
     sucesstext.style.display='block';
+    errormessagediv.innerHTML=``;
 })

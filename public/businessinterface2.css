@@ -47,7 +47,7 @@ body{
 .maincon{
     position: relative;
     width: 100vw;
-    height: 100vh;
+    /* height: 100vh; */
     font-size: 1.3rem;
     display: flex;
     justify-content: center;
@@ -66,7 +66,7 @@ body{
 }
 
 header{
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
 }

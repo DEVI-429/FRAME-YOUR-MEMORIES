@@ -17,9 +17,10 @@ body {
   justify-content: center;
   padding: 20px;
   /* background: rgb(182, 128, 188); */
-  background: url('./background6.jpg');
+  background: url('images/background3.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 .container {
   position: relative;
